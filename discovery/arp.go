@@ -25,7 +25,7 @@ import (
 )
 
 func decodeARP(b []byte) (nom.Host, nom.Port, error) {
-	p := gopacket.NewPacket(b, layers.LayerTypeARP, gopacket.Default)
+	p := gopacket.NewPacket(b, layers.LayerTypeEthernet, gopacket.Default)
 	arplayer := p.Layer(layers.LayerTypeARP)
 
 	if arplayer == nil {
