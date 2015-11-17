@@ -170,9 +170,9 @@ func (h *timeoutHandler) Map(msg bh.Msg, ctx bh.MapContext) bh.MappedCells {
 	return bh.MappedCells{}
 }
 
-type hostPktInHandler struct{}
+type arpPktInHandler struct{}
 
-func (h *hostPktInHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
+func (h *arpPktInHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 	pin := msg.Data().(nom.PacketIn)
 	p := gopacket.NewPacket([]byte(pin.Packet), layers.LayerTypeEthernet, gopacket.Default)
 	etherlayer := p.Layer(layers.LayerTypeEthernet)
@@ -198,7 +198,7 @@ func (h *hostPktInHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 
 }
 
-func (h *hostPktInHandler) Map(msg bh.Msg, ctx bh.MapContext) bh.MappedCells {
+func (h *arpPktInHandler) Map(msg bh.Msg, ctx bh.MapContext) bh.MappedCells {
 	return bh.MappedCells{}
 }
 
@@ -296,6 +296,7 @@ func RegisterDiscovery(h bh.Hive) {
 	a.Handle(nom.PortUpdated{}, &portUpdateHandler{})
 	// TODO(soheil): Handle PortRemoved.
 	a.Handle(nom.PacketIn{}, &lldpPktInHandler{})
+	a.Handle(nom.PacketIn{}, &arpPktInHandler{})
 	a.Handle(NewLink{}, &newLinkHandler{})
 	a.Handle(lldpTimeout{}, &timeoutHandler{})
 	go func() {
