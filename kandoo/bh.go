@@ -4,7 +4,7 @@ import (
 	"time"
 
 	bh "github.com/kandoo/beehive"
-	"github.com/kandoo/beehive-netctrl/nom"
+	"github.com/elahejalalpour/beehive-netctrl/nom"
 )
 
 // RegisterApps registers Kandoo applications on the hive, with the given

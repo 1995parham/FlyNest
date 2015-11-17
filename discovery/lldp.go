@@ -5,7 +5,7 @@ import (
 
 	"github.com/elahejalalpour/beehive-netctrl/nom"
 	bh "github.com/kandoo/beehive"
-	"github.com/kandoo/beehive-netctrl/net/lldp"
+	"github.com/elahejalalpour/beehive-netctrl/net/lldp"
 )
 
 func sendLLDPPacket(n nom.Node, p nom.Port, ctx bh.RcvContext) {

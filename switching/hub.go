@@ -2,7 +2,7 @@ package switching
 
 import (
 	bh "github.com/kandoo/beehive"
-	"github.com/kandoo/beehive-netctrl/nom"
+	"github.com/elahejalalpour/beehive-netctrl/nom"
 )
 
 type Hub struct{}
