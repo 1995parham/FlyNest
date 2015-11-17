@@ -3,8 +3,8 @@ package controller
 import (
 	"time"
 
+	"github.com/elahejalalpour/beehive-netctrl/nom"
 	bh "github.com/kandoo/beehive"
-	"github.com/kandoo/beehive-netctrl/nom"
 )
 
 func RegisterNOMController(h bh.Hive) {

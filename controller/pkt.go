@@ -1,8 +1,8 @@
 package controller
 
 import (
+	"github.com/elahejalalpour/beehive-netctrl/nom"
 	bh "github.com/kandoo/beehive"
-	"github.com/kandoo/beehive-netctrl/nom"
 )
 
 type pktOutHandler struct{}

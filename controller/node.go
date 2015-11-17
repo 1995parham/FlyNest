@@ -6,8 +6,8 @@ import (
 
 	"github.com/kandoo/beehive/Godeps/_workspace/src/github.com/golang/glog"
 
+	"github.com/elahejalalpour/beehive-netctrl/nom"
 	bh "github.com/kandoo/beehive"
-	"github.com/kandoo/beehive-netctrl/nom"
 )
 
 type nodeConnectedHandler struct{}

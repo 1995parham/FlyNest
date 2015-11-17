@@ -1,6 +1,6 @@
 package controller
 
-import "github.com/kandoo/beehive-netctrl/nom"
+import "github.com/elahejalalpour/beehive-netctrl/nom"
 
 // Batch represents a collection of flow entries to be added to and removed from
 // the network. The controller ensures that these changes are either all applied

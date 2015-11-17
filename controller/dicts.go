@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/elahejalalpour/beehive-netctrl/nom"
 	bh "github.com/kandoo/beehive"
-	"github.com/kandoo/beehive-netctrl/nom"
 	"github.com/kandoo/beehive/state"
 )
 
