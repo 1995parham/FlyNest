@@ -4,10 +4,12 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/golang/glog"
+	"github.com/google/gopacket"
+	"github.com/google/gopacket/layers"
+
+	"github.com/elahejalalpour/beehive-netctrl/nom"
 	bh "github.com/kandoo/beehive"
-	"github.com/kandoo/beehive-netctrl/net/ethernet"
-	"github.com/kandoo/beehive-netctrl/nom"
-	"github.com/kandoo/beehive/Godeps/_workspace/src/github.com/golang/glog"
 )
 
 const (
@@ -167,12 +169,19 @@ func (h *timeoutHandler) Map(msg bh.Msg, ctx bh.MapContext) bh.MappedCells {
 	return bh.MappedCells{}
 }
 
-type pktInHandler struct{}
+type lldpPktInHandler struct{}
 
-func (h *pktInHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
+func (h *lldpPktInHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 	pin := msg.Data().(nom.PacketIn)
-	e := ethernet.NewEthernetWithBuf([]byte(pin.Packet))
-	if e.Type() != uint16(ethernet.ETH_T_LLDP) {
+	p := gopacket.NewPacket([]byte(pin.Packet), layers.LayerTypeEthernet, gopacket.Default)
+	etherlayer := p.Layer(layers.LayerTypeEthernet)
+
+	if etherlayer == nil {
+		return nil
+	}
+	e, _ := etherlayer.(*layers.Ethernet)
+
+	if e.EthernetType != layers.EthernetTypeLinkLayerDiscovery {
 		return nil
 	}
 
@@ -206,7 +215,7 @@ func (h *pktInHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 	return nil
 }
 
-func (h *pktInHandler) Map(msg bh.Msg, ctx bh.MapContext) bh.MappedCells {
+func (h *lldpPktInHandler) Map(msg bh.Msg, ctx bh.MapContext) bh.MappedCells {
 	return bh.MappedCells{
 		{nodeDict, string(msg.Data().(nom.PacketIn).Node)},
 	}
@@ -253,7 +262,7 @@ func RegisterDiscovery(h bh.Hive) {
 	a.Handle(nom.NodeLeft{}, &nodeLeftHandler{})
 	a.Handle(nom.PortUpdated{}, &portUpdateHandler{})
 	// TODO(soheil): Handle PortRemoved.
-	a.Handle(nom.PacketIn{}, &pktInHandler{})
+	a.Handle(nom.PacketIn{}, &lldpPktInHandler{})
 	a.Handle(NewLink{}, &newLinkHandler{})
 	a.Handle(lldpTimeout{}, &timeoutHandler{})
 	go func() {
