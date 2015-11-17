@@ -5,7 +5,7 @@ import (
 	"net"
 
 	bh "github.com/kandoo/beehive"
-	"github.com/kandoo/beehive-netctrl/openflow/of"
+	"github.com/elahejalalpour/beehive-netctrl/openflow/of"
 	"github.com/kandoo/beehive/Godeps/_workspace/src/github.com/golang/glog"
 )
 

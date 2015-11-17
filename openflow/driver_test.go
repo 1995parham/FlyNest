@@ -3,7 +3,7 @@ package openflow
 import (
 	"testing"
 
-	"github.com/kandoo/beehive-netctrl/nom"
+	"github.com/elahejalalpour/beehive-netctrl/nom"
 )
 
 func TestOF10Match(t *testing.T) {

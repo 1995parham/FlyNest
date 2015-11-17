@@ -3,7 +3,7 @@ package openflow
 import (
 	"strconv"
 
-	"github.com/kandoo/beehive-netctrl/nom"
+	"github.com/elahejalalpour/beehive-netctrl/nom"
 )
 
 func datapathIDToNodeID(dpID uint64) nom.NodeID {
