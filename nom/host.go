@@ -58,9 +58,9 @@ func (n Host) UID() UID {
 }
 
 /*
- * ParseNodeUID parses a UID of a node and returns the respective node IDs.
+ * ParseHostUID parses a UID of a host and returns the respective host IDs.
  */
-func ParseNodeUID(id UID) HostID {
+func ParseHostUID(id UID) HostID {
 	s := UIDSplit(id)
 	return HostID(s[0])
 }
