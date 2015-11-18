@@ -188,13 +188,13 @@ func (h *arpPktInHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 	}
 
 	host, _, err := decodeARP([]byte(pin.Packet))
-	ctx.Emit(nom.HostJoined(host))
 
 	if err != nil {
 		return err
 	}
 
 	fmt.Println(host)
+	ctx.Emit(nom.HostJoined(host))
 
 	return nil
 
