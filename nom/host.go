@@ -22,15 +22,20 @@ import (
 
 // TODO(elahe): add documentation ..
 type HostLeft Host
+
+/*
+ * HostJoined is a message emitted when a host connects to network.
+ */
 type HostJoined Host
 
 /*
  * Host represnts a end point element, such as pc :)
  */
 type Host struct {
-	ID      HostID
-	Net     UID
-	MACAddr MACAddr
+	ID       HostID
+	Net      UID
+	MACAddr  MACAddr
+	IPv4Addr IPv4Addr
 }
 
 /*
