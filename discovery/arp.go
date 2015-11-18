@@ -40,6 +40,7 @@ func decodeARP(b []byte) (nom.Host, nom.Port, error) {
 
 	h := nom.Host{}
 	copy(h.MACAddr[:], arp.SourceHwAddress[:6])
+	copy(h.IPv4Addr[:], arp.SourceProtAddress[:4])
 
 	//portUID := nom.UID(v[1:])
 	//hID, pID := nom.ParsePortUID(portUID)

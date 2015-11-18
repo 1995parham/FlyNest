@@ -294,10 +294,14 @@ func RegisterDiscovery(h bh.Hive) {
 	a := h.NewApp("discovery")
 	a.Handle(nom.NodeJoined{}, &nodeJoinedHandler{})
 	a.Handle(nom.NodeLeft{}, &nodeLeftHandler{})
+
 	a.Handle(nom.PortUpdated{}, &portUpdateHandler{})
 	// TODO(soheil): Handle PortRemoved.
+
 	a.Handle(nom.PacketIn{}, &lldpPktInHandler{})
+
 	a.Handle(nom.PacketIn{}, &arpPktInHandler{})
+
 	a.Handle(NewLink{}, &newLinkHandler{})
 	a.Handle(lldpTimeout{}, &timeoutHandler{})
 	go func() {
