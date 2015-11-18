@@ -91,6 +91,7 @@ func (h *nodeJoinedHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 	}
 	np.N = n
 	// TODO(soheil): Add a flow entry to forward lldp packets to the controller.
+	// TODO(elahe): Add a flow entry to forward arp packets to the controller.
 	return d.Put(k, np)
 }
 
