@@ -5,11 +5,11 @@
  *
  * [] Creation Date : 18-11-2015
  *
- * [] Created By : Parham Alvani (parham.alvani@gmail.com)
+ * [] Created By : Elahe Jalalpour (el.jalalpour@gmail.com)
  * =======================================
  */
 /*
- * Copyright (c) 2015 Parham Alvani.
+ * Copyright (c) 2015 Elahe Jalalpour.
  */
 package config
 
@@ -26,12 +26,20 @@ type ConfigHTTPHandler struct{}
 
 func (h *ConfigHTTPHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	name, ok := vars["name"]
 
+	app, ok := vars["app"]
 	if !ok {
-		fmt.Println("Invalid request")
+		http.Error(w, "Invalid request", http.StatusBadRequest)
+		return
 	}
-	fmt.Println(name)
+	fmt.Println(app)
+
+	feature, ok := vars["feature"]
+	if !ok {
+		http.Error(w, "Invalid request", http.StatusBadRequest)
+		return
+	}
+	fmt.Println(feature)
 
 	if r.Method == "POST" {
 		fmt.Println("Hello from POST message")
@@ -42,19 +50,22 @@ func (h *ConfigHTTPHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	creq := ConfigRequest{
-		AppName: name,
+		AppName:         app,
+		RequiredFeature: feature,
 	}
 
 	cres, err := bh.Sync(context.TODO(), creq)
-	if err == nil {
+	if err == nil && cres != nil {
 		w.Header().Set("Server", "Beehive-netctrl-Config-Server")
 		w.Write(cres.(ConfigResponse).ResponseData)
+		return
 	} else {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 }
 
 func StartConfig(h bh.Hive) {
 	app := h.NewApp("ConfigApp", bh.Persistent(1))
-	app.HandleHTTP("/{name}", &ConfigHTTPHandler{})
+	app.HandleHTTP("/{app}/{feature}", &ConfigHTTPHandler{})
 }
