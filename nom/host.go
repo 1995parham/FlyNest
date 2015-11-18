@@ -45,7 +45,7 @@ type Host struct {
 type HostID string
 
 func (h Host) String() string {
-	return fmt.Sprintf("Host %s (mac=%v)", string(h.ID), h.MACAddr)
+	return fmt.Sprintf("Host %s (mac=%v) (ip=%v)", string(h.ID), h.MACAddr, h.IPv4Addr)
 }
 
 /*
