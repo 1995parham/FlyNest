@@ -18,14 +18,18 @@ import (
 	"net/http"
 
 	bh "github.com/kandoo/beehive"
+	"github.com/kandoo/beehive/Godeps/_workspace/src/github.com/gorilla/mux"
 	"github.com/kandoo/beehive/Godeps/_workspace/src/golang.org/x/net/context"
 )
 
 type ConfigHTTPHandler struct{}
 
 func (h *ConfigHTTPHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	url := r.URL
-	fmt.Println(url.RequestURI())
+	vars := mux.Vars(r)
+	name, ok := vars["name"]
+	if !ok {
+		fmt.Println("Invalid request")
+	}
 
 	if r.Method == "POST" {
 		fmt.Println("Hello from POST message")
@@ -36,7 +40,7 @@ func (h *ConfigHTTPHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	creq := ConfigRequest{
-		AppName: url.RequestURI(),
+		AppName: name,
 	}
 
 	cres, err := bh.Sync(context.TODO(), creq)
@@ -47,6 +51,6 @@ func (h *ConfigHTTPHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func StartConfig(h bh.Hive) {
-	app := h.NewApp("hello-world", bh.Persistent(1))
+	app := h.NewApp("ConfigApp", bh.Persistent(1))
 	app.HandleHTTP("/{name}", &ConfigHTTPHandler{})
 }
