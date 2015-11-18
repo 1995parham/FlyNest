@@ -61,11 +61,14 @@ func (h *ConfigHTTPHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	} else {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Errorf("ConfigHTTPHandler: %v\n", err)
 		return
 	}
 }
 
-func StartConfig(h bh.Hive) {
+func StartConfig(h bh.Hive) error {
 	app := h.NewApp("ConfigApp", bh.Persistent(1))
 	app.HandleHTTP("/{app}/{feature}", &ConfigHTTPHandler{})
+
+	return nil
 }
