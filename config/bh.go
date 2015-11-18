@@ -27,9 +27,11 @@ type ConfigHTTPHandler struct{}
 func (h *ConfigHTTPHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	name, ok := vars["name"]
+
 	if !ok {
 		fmt.Println("Invalid request")
 	}
+	fmt.Println(name)
 
 	if r.Method == "POST" {
 		fmt.Println("Hello from POST message")
@@ -47,6 +49,8 @@ func (h *ConfigHTTPHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if err == nil {
 		w.Header().Set("Server", "Beehive-netctrl-Config-Server")
 		w.Write(cres.(ConfigResponse).ResponseData)
+	} else {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
 
