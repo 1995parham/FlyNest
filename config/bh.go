@@ -15,6 +15,7 @@ package config
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http"
 
 	bh "github.com/kandoo/beehive"
@@ -32,29 +33,28 @@ func StartConfig(h bh.Hive) error {
 
 		app, ok := vars["app"]
 		if !ok {
+			/* This should not happend :) */
 			http.Error(w, "Invalid request", http.StatusBadRequest)
 			return
 		}
-		fmt.Println(app)
 
 		feature, ok := vars["feature"]
 		if !ok {
+			/* This should not happend :) */
 			http.Error(w, "Invalid request", http.StatusBadRequest)
 			return
-		}
-		fmt.Println(feature)
-
-		if r.Method == "POST" {
-			fmt.Println("Hello from POST message")
-		}
-
-		if r.Method == "GET" {
-			fmt.Println("Hello from GET message")
 		}
 
 		creq := ConfigRequest{
 			AppName:         app,
 			RequiredFeature: feature,
+		}
+
+		if r.ContentLength > 0 {
+			data, err := ioutil.ReadAll(r.Body)
+			if err == nil {
+				creq.RequiredData = data
+			}
 		}
 
 		cres, err := h.Sync(context.TODO(), creq)
