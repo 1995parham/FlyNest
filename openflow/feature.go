@@ -8,7 +8,6 @@ import (
 )
 
 func (of *of10Driver) handleFeaturesReply(rep of10.FeaturesReply, c *ofConn) error {
-
 	return lateFeaturesReplyError()
 }
 

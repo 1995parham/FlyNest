@@ -4,8 +4,8 @@ import (
 	"io"
 
 	"github.com/elahejalalpour/beehive-netctrl/nom"
-	bh "github.com/kandoo/beehive"
 	"github.com/elahejalalpour/beehive-netctrl/openflow/of"
+	bh "github.com/kandoo/beehive"
 	"github.com/kandoo/beehive/Godeps/_workspace/src/github.com/golang/glog"
 )
 
