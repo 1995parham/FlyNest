@@ -26,6 +26,8 @@ func StartConfig(h bh.Hive) error {
 	app := h.NewApp("ConfigApp", bh.Persistent(1))
 
 	configHTTPHandler := func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Server", "Beehive-netctrl-Config-Server")
+
 		vars := mux.Vars(r)
 
 		app, ok := vars["app"]
@@ -57,7 +59,6 @@ func StartConfig(h bh.Hive) error {
 
 		cres, err := h.Sync(context.TODO(), creq)
 		if err == nil && cres != nil {
-			w.Header().Set("Server", "Beehive-netctrl-Config-Server")
 			w.Write(cres.(ConfigResponse).ResponseData)
 			return
 		} else {
