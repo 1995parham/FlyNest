@@ -289,26 +289,3 @@ func (h *newLinkHandler) Map(msg bh.Msg, ctx bh.MapContext) bh.MappedCells {
 	n, _ := nom.ParsePortUID(msg.Data().(NewLink).From)
 	return bh.MappedCells{{nodeDict, string(n)}}
 }
-
-// RegisterDiscovery registers the handlers for topology discovery on the hive.
-func RegisterDiscovery(h bh.Hive) {
-	a := h.NewApp("discovery")
-	a.Handle(nom.NodeJoined{}, &nodeJoinedHandler{})
-	a.Handle(nom.NodeLeft{}, &nodeLeftHandler{})
-
-	a.Handle(nom.PortUpdated{}, &portUpdateHandler{})
-	// TODO(soheil): Handle PortRemoved.
-
-	a.Handle(nom.PacketIn{}, &lldpPktInHandler{})
-
-	a.Handle(nom.PacketIn{}, &arpPktInHandler{})
-
-	a.Handle(NewLink{}, &newLinkHandler{})
-	a.Handle(lldpTimeout{}, &timeoutHandler{})
-	go func() {
-		for {
-			h.Emit(lldpTimeout{})
-			time.Sleep(60 * time.Second)
-		}
-	}()
-}
