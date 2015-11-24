@@ -14,7 +14,6 @@ import (
 
 const (
 	nodeDict = "N"
-	hostDict = "H"
 )
 
 type nodePortsAndLinks struct {
@@ -168,39 +167,6 @@ func (h *timeoutHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 }
 
 func (h *timeoutHandler) Map(msg bh.Msg, ctx bh.MapContext) bh.MappedCells {
-	return bh.MappedCells{}
-}
-
-type arpPktInHandler struct{}
-
-func (h *arpPktInHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
-	pin := msg.Data().(nom.PacketIn)
-	p := gopacket.NewPacket([]byte(pin.Packet), layers.LayerTypeEthernet, gopacket.Default)
-	etherlayer := p.Layer(layers.LayerTypeEthernet)
-
-	if etherlayer == nil {
-		return nil
-	}
-	e, _ := etherlayer.(*layers.Ethernet)
-
-	if e.EthernetType != layers.EthernetTypeARP {
-		return nil
-	}
-
-	host, _, err := decodeARP([]byte(pin.Packet))
-
-	if err != nil {
-		return err
-	}
-
-	fmt.Println(host)
-	ctx.Emit(nom.HostJoined(host))
-
-	return nil
-
-}
-
-func (h *arpPktInHandler) Map(msg bh.Msg, ctx bh.MapContext) bh.MappedCells {
 	return bh.MappedCells{}
 }
 

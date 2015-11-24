@@ -1,17 +1,12 @@
 /*
- * In The Name Of God
- * ========================================
- * [] File Name : arp.go
- *
- * [] Creation Date : 17-11-2015
- *
- * [] Created By : Elahe Jalalpour (el.jalalpour@gmail.com)
- * =======================================
+ * +===============================================
+ * | Author:        Elahe Jalalpour (el.jalalpour@gmail.com)
+ * |
+ * | Creation Date: 24-11-2015
+ * |
+ * | File Name:     arp.go
+ * +===============================================
  */
-/*
- * Copyright (c) 2015 Elahe Jalalpour.
- */
-
 package discovery
 
 import (
@@ -21,7 +16,6 @@ import (
 	"github.com/google/gopacket/layers"
 
 	"github.com/elahejalalpour/beehive-netctrl/nom"
-	//	bh "github.com/kandoo/beehive"
 )
 
 func decodeARP(b []byte) (nom.Host, nom.Port, error) {
@@ -42,9 +36,7 @@ func decodeARP(b []byte) (nom.Host, nom.Port, error) {
 	copy(h.MACAddr[:], arp.SourceHwAddress[:6])
 	copy(h.IPv4Addr[:], arp.SourceProtAddress[:4])
 
-	//portUID := nom.UID(v[1:])
-	//hID, pID := nom.ParsePortUID(portUID)
-	//h.ID = hID
+	h.ID = nom.HostID(h.MACAddr.String())
 
 	return h, nom.Port{}, nil
 }

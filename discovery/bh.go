@@ -1,4 +1,13 @@
 /*
+ * +===============================================
+ * | Author:        Elahe Jalalpour (el.jalalpour@gmail.com)
+ * |
+ * | Creation Date: 24-11-2015
+ * |
+ * | File Name:     bh.go
+ * +===============================================
+ */
+/*
  * In The Name Of God
  * ========================================
  * [] File Name : bh.go
@@ -20,7 +29,8 @@ import (
 	"time"
 )
 
-// RegisterDiscovery registers the handlers for topology discovery on the hive.
+// RegisterDiscovery registers the discovery module for topology discovery on the hive.
+// you can use it's REST API in order to comminucate with it.
 func RegisterDiscovery(h bh.Hive) {
 	a := h.NewApp("discovery")
 	a.Handle(nom.NodeJoined{}, &nodeJoinedHandler{})
@@ -31,7 +41,9 @@ func RegisterDiscovery(h bh.Hive) {
 
 	a.Handle(nom.PacketIn{}, &lldpPktInHandler{})
 
-	a.Handle(nom.PacketIn{}, &arpPktInHandler{})
+	host := h.NewApp("discovery.Host")
+	host.Handle(nom.PacketIn{}, &arpPktInHandler{})
+	host.Handle(nom.HostConnected{}, &hostConnectedHandler{})
 
 	a.Handle(NewLink{}, &newLinkHandler{})
 	a.Handle(lldpTimeout{}, &timeoutHandler{})
