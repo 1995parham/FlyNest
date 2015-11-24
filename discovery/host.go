@@ -15,6 +15,7 @@ import (
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
 	bh "github.com/kandoo/beehive"
+	"github.com/kandoo/beehive/Godeps/_workspace/src/github.com/golang/glog"
 )
 
 type arpPktInHandler struct{}
@@ -36,8 +37,9 @@ func (h *arpPktInHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 	host, _, err := decodeARP([]byte(pin.Packet))
 
 	if err != nil {
-		return err
+		return fmt.Errorf("ARP decoding error: %v", err)
 	}
+	glog.V(2).Infof("Host detected: %v", host)
 
 	ctx.Emit(nom.HostConnected(host))
 
@@ -53,9 +55,15 @@ type hostConnectedHandler struct{}
 func (h *hostConnectedHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 	host := msg.Data().(nom.HostConnected)
 	dict := ctx.Dict(hostDict)
-	fmt.Println(dict)
-	dict.Put(host.MACAddr.String(), host)
-	return nil
+
+	_, err := dict.Get(host.MACAddr.String())
+	if err == nil {
+		glog.Warningf("Host rejoins: %v", host)
+	}
+
+	ctx.Emit(nom.HostJoined(host))
+
+	return dict.Put(host.MACAddr.String(), host)
 }
 
 func (h *hostConnectedHandler) Map(msg bh.Msg, ctx bh.MapContext) bh.MappedCells {

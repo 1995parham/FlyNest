@@ -7,19 +7,6 @@
  * | File Name:     bh.go
  * +===============================================
  */
-/*
- * In The Name Of God
- * ========================================
- * [] File Name : bh.go
- *
- * [] Creation Date : 19-11-2015
- *
- * [] Created By : Elahe Jalalpour (el.jalalpour@gmail.com)
- * =======================================
- */
-/*
- * Copyright (c) 2015 Elahe Jalalpour.
- */
 package discovery
 
 import (
@@ -41,11 +28,9 @@ func RegisterDiscovery(h bh.Hive) {
 
 	a.Handle(nom.PacketIn{}, &lldpPktInHandler{})
 
-	arp := h.NewApp("discovery.ARP")
-	arp.Handle(nom.PacketIn{}, &arpPktInHandler{})
+	a.Handle(nom.PacketIn{}, &arpPktInHandler{})
 
-	host := h.NewApp("discovery.Host")
-	host.Handle(nom.HostConnected{}, &hostConnectedHandler{})
+	a.Handle(nom.HostConnected{}, &hostConnectedHandler{})
 
 	a.Handle(NewLink{}, &newLinkHandler{})
 	a.Handle(lldpTimeout{}, &timeoutHandler{})
