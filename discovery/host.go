@@ -10,6 +10,7 @@
 package discovery
 
 import (
+	"fmt"
 	"github.com/elahejalalpour/beehive-netctrl/nom"
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
@@ -52,6 +53,7 @@ type hostConnectedHandler struct{}
 func (h *hostConnectedHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 	host := msg.Data().(nom.HostConnected)
 	dict := ctx.Dict(hostDict)
+	fmt.Println(dict)
 	dict.Put(host.MACAddr.String(), host)
 	return nil
 }

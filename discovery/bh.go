@@ -41,8 +41,10 @@ func RegisterDiscovery(h bh.Hive) {
 
 	a.Handle(nom.PacketIn{}, &lldpPktInHandler{})
 
+	arp := h.NewApp("discovery.ARP")
+	arp.Handle(nom.PacketIn{}, &arpPktInHandler{})
+
 	host := h.NewApp("discovery.Host")
-	host.Handle(nom.PacketIn{}, &arpPktInHandler{})
 	host.Handle(nom.HostConnected{}, &hostConnectedHandler{})
 
 	a.Handle(NewLink{}, &newLinkHandler{})
