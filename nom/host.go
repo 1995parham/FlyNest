@@ -15,7 +15,6 @@
 package nom
 
 import (
-	"encoding/gob"
 	"encoding/json"
 	"fmt"
 )
@@ -71,9 +70,4 @@ func (n *Host) JSONDecode(b []byte) error {
 // JSONEncode encodes the host into a byte array using JSON.
 func (n *Host) JSONEncode() ([]byte, error) {
 	return json.Marshal(n)
-}
-
-func init() {
-	gob.Register(HostLeft{})
-	gob.Register(HostJoined{})
 }
