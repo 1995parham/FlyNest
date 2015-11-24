@@ -1,20 +1,16 @@
 /*
- * In The Name Of God
- * ========================================
- * [] File Name : host.go
- *
- * [] Creation Date : 16-11-2015
- *
- * [] Created By : Elahe Jalalpour (el.jalalpour@gmail.com)
- * =======================================
+ * +===============================================
+ * | Author:        Elahe Jalalpour (el.jalalpour@gmail.com)
+ * |
+ * | Creation Date: 24-11-2015
+ * |
+ * | File Name:     host.go
+ * +===============================================
  */
-/*
- * Copyright (c) 2015 Elahe Jalalpour.
- */
-
 package nom
 
 import (
+	"encoding/gob"
 	"encoding/json"
 	"fmt"
 )
@@ -29,6 +25,10 @@ type HostJoined Host
 // HostConnected is a message emitted when a host connects to network,
 // we use this event in order to add host into our cells.
 type HostConnected Host
+
+// HostConnected is a message emitted when a host disconnects from network,
+// we use this event in order to remove host from our cells.
+type HostDisconnected Host
 
 // Host represnts a end point element, such as your pc.
 type Host struct {
@@ -70,4 +70,11 @@ func (n *Host) JSONDecode(b []byte) error {
 // JSONEncode encodes the host into a byte array using JSON.
 func (n *Host) JSONEncode() ([]byte, error) {
 	return json.Marshal(n)
+}
+
+func init() {
+	gob.Register(HostConnected{})
+	gob.Register(HostDisconnected{})
+	gob.Register(HostLeft{})
+	gob.Register(HostJoined{})
 }
