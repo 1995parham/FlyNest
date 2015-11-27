@@ -22,7 +22,7 @@ type HTTPHandler interface {
 }
 
 type HTTPApp struct {
-	App  bh.App
+	App  *bh.App
 	Hive bh.Hive
 }
 
@@ -31,21 +31,21 @@ func (h HTTPApp) HandleHTTPFunc(url string, handler HTTPHandlerFunc) *mux.Route 
 		fmt.Println("Hello")
 		handler(w, r, h.Hive)
 	}
-	return h.App.HandleHTTPFunc(url, std_handler)
+	return (*h.App).HandleHTTPFunc(url, std_handler)
 }
 
 func (h HTTPApp) HandleHTTP(url string, handler HTTPHandler) *mux.Route {
 	std_handler := func(w http.ResponseWriter, r *http.Request) {
 		handler.Handler(w, r, h.Hive)
 	}
-	return h.App.HandleHTTPFunc(url, std_handler)
+	return (*h.App).HandleHTTPFunc(url, std_handler)
 }
 
 func (h HTTPApp) DefaultHandle() *mux.Route {
 	return h.HandleHTTPFunc("/{submodule}/{verb}", defaultHTTPHandler)
 }
 
-func NewHTTPApp(a bh.App, h bh.Hive) HTTPApp {
+func NewHTTPApp(a *bh.App, h bh.Hive) HTTPApp {
 	return HTTPApp{
 		App:  a,
 		Hive: h,
