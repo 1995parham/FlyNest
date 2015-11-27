@@ -54,10 +54,11 @@ func defaultHTTPHandler(w http.ResponseWriter, r *http.Request, h bh.Hive) {
 	cres, err := h.Sync(context.TODO(), creq)
 	if err == nil && cres != nil {
 		w.Write(cres.(HTTPResponse).Data)
+		w.WriteHeader(http.StatusOK)
 		return
 	} else {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		fmt.Errorf("ConfigHTTPHandler: %v\n", err)
+		fmt.Errorf("defaultTTPHandler: %v\n", err)
 		return
 	}
 
