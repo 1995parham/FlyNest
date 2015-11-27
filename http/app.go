@@ -40,7 +40,7 @@ func (h HTTPApp) HandleHTTP(url string, handler HTTPHandler) *mux.Route {
 }
 
 func (h HTTPApp) DefaultHandle() *mux.Route {
-	h.HandleHTTPFunc("/{submodule}/{verb}", defaultHTTPHandler)
+	return h.HandleHTTPFunc("/{submodule}/{verb}", defaultHTTPHandler)
 }
 
 func NewHTTPApp(a bh.App, h bh.Hive) HTTPApp {
