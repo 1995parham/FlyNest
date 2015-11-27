@@ -39,7 +39,7 @@ func defaultHTTPHandler(w http.ResponseWriter, r *http.Request, h bh.Hive) {
 	}
 
 	creq := HTTPRequest{
-		AppName: app,
+		AppName: submodule,
 		Verb:    verb,
 	}
 
@@ -47,7 +47,7 @@ func defaultHTTPHandler(w http.ResponseWriter, r *http.Request, h bh.Hive) {
 	if r.ContentLength > 0 {
 		data, err := ioutil.ReadAll(r.Body)
 		if err == nil {
-			creq.RequiredData = data
+			creq.Data = data
 		}
 	}
 
