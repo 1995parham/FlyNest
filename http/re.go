@@ -7,7 +7,7 @@
  * | File Name:     re.go
  * +===============================================
  */
-package config
+package http
 
 import (
 	"encoding/gob"
