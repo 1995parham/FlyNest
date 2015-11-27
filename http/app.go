@@ -10,6 +10,7 @@
 package http
 
 import (
+	"fmt"
 	bh "github.com/kandoo/beehive"
 	"github.com/kandoo/beehive/Godeps/_workspace/src/github.com/gorilla/mux"
 	"net/http"
@@ -40,6 +41,7 @@ func (h HTTPApp) HandleHTTP(url string, handler HTTPHandler) *mux.Route {
 }
 
 func (h HTTPApp) DefaultHandle() *mux.Route {
+	fmt.Println("Default handler registration was called")
 	return h.HandleHTTPFunc("/{submodule}/{verb}", defaultHTTPHandler)
 }
 
