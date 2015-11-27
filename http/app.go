@@ -39,9 +39,9 @@ func (h HTTPApp) HandleHTTP(url string, handler HTTPHandler) *mux.Route {
 	return h.App.HandleHTTPFunc(url, std_handler)
 }
 
-func NewHTTPApp(h bh.Hive, name string) HTTPApp {
+func NewHTTPApp(a bh.App, h bh.Hive) HTTPApp {
 	return HTTPApp{
-		App:  bh.NewApp(name),
+		App:  a,
 		Hive: h,
 	}
 }
