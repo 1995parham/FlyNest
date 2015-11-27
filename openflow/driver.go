@@ -259,7 +259,7 @@ func (d *of12Driver) convToOF(msg bh.Msg, c *ofConn) (of.Header, error) {
 			ofa, err := d.convAction(a)
 			if err != nil {
 				return of.Header{},
-					fmt.Errorf("of10Driver: invalid action %v", err)
+					fmt.Errorf("of12Driver: invalid action %v", err)
 			}
 			out.AddActions(ofa)
 		}
@@ -487,6 +487,11 @@ func (d *of12Driver) convAction(a nom.Action) (of12.Action, error) {
 		}
 		out := of12.NewActionOutput()
 		out.SetPort(uint32(p))
+		return out.Action, nil
+
+	case nom.ActionSendToController:
+		out := of12.NewActionOutput()
+		out.SetPort(of12.PP_CONTROLLER)
 		return out.Action, nil
 
 	default:
