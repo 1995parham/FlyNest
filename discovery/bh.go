@@ -10,6 +10,7 @@
 package discovery
 
 import (
+	"github.com/elahejalalpour/beehive-netctrl/http"
 	"github.com/elahejalalpour/beehive-netctrl/nom"
 	bh "github.com/kandoo/beehive"
 
@@ -40,4 +41,8 @@ func RegisterDiscovery(h bh.Hive) {
 			time.Sleep(60 * time.Second)
 		}
 	}()
+
+	http.NewHTTPApp(a, h).DefaultHandle()
+
+	a.Handle(http.HTTPRequest{}, &httpHostListHandler{})
 }
