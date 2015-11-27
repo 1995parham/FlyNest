@@ -10,7 +10,6 @@
 package http
 
 import (
-	"fmt"
 	bh "github.com/kandoo/beehive"
 	"github.com/kandoo/beehive/Godeps/_workspace/src/github.com/gorilla/mux"
 	"net/http"
@@ -28,7 +27,6 @@ type HTTPApp struct {
 
 func (h HTTPApp) HandleHTTPFunc(url string, handler HTTPHandlerFunc) *mux.Route {
 	std_handler := func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("Hello")
 		handler(w, r, h.Hive)
 	}
 	return (*h.App).HandleHTTPFunc(url, std_handler)
