@@ -491,7 +491,7 @@ func (d *of12Driver) convAction(a nom.Action) (of12.Action, error) {
 
 	case nom.ActionSendToController:
 		out := of12.NewActionOutput()
-		out.SetPort(of12.PP_CONTROLLER)
+		out.SetPort(uint32(of12.PP_CONTROLLER))
 		return out.Action, nil
 
 	default:
