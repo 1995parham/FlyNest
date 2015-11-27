@@ -20,7 +20,7 @@ import (
 )
 
 func defaultHTTPHandler(w http.ResponseWriter, r *http.Request, h bh.Hive) {
-	w.Header().Set("Server", "Beehive-netctrl-Config-Server")
+	w.Header().Set("Server", "Beehive-netctrl-HTTP-Server")
 
 	vars := mux.Vars(r)
 
