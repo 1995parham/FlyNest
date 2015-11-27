@@ -28,6 +28,7 @@ type HTTPApp struct {
 
 func (h HTTPApp) HandleHTTPFunc(url string, handler HTTPHandlerFunc) *mux.Route {
 	std_handler := func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("Hello")
 		handler(w, r, h.Hive)
 	}
 	return h.App.HandleHTTPFunc(url, std_handler)
@@ -41,7 +42,6 @@ func (h HTTPApp) HandleHTTP(url string, handler HTTPHandler) *mux.Route {
 }
 
 func (h HTTPApp) DefaultHandle() *mux.Route {
-	fmt.Println("Default handler registration was called")
 	return h.HandleHTTPFunc("/{submodule}/{verb}", defaultHTTPHandler)
 }
 
