@@ -140,6 +140,7 @@ func (d *of12Driver) handshake(c *ofConn) error {
 	c.Flush()
 
 	glog.V(2).Info("Sent features request to the switch")
+	fmt.Println("Sent features request to the switch")
 
 	hdr, err := c.ReadHeader()
 	if err != nil {
