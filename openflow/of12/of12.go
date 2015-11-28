@@ -4451,9 +4451,9 @@ func (this OxmInPort) Size() int {
 }
 
 func ToOxmInPort(p OxmField) (OxmInPort, error) {
-	if !IsOxmInPort(p) {
-		return NewOxmInPortWithBuf(nil), errors.New("Cannot convert to of12.OxmInPort")
-	}
+	//if !IsOxmInPort(p) {
+	//	return NewOxmInPortWithBuf(nil), errors.New("Cannot convert to of12.OxmInPort")
+	//}
 
 	return NewOxmInPortWithBuf(p.Buf), nil
 }
