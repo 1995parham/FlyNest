@@ -85,7 +85,6 @@ func (h *arpPktInHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 		return err
 	}
 	glog.V(2).Infof("Host detected: %v", host)
-	fmt.Printf("Host detected: %v\n", host)
 
 	ctx.Emit(nom.HostConnected(host))
 
