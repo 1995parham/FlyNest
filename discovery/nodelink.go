@@ -91,6 +91,28 @@ func (h *nodeJoinedHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 	np.N = n
 	// TODO(soheil): Add a flow entry to forward lldp packets to the controller.
 	// TODO(elahe): Add a flow entry to forward arp packets to the controller.
+
+	// Add a flow entry to forward arp packets to the controller
+	mt := nom.Match{}
+	mt.AddField(nom.EthType(nom.EthTypeARP))
+	acs := []nom.Action{nom.ActionSendToController{}}
+	fe := nom.FlowEntry{
+		ID: "Discovery-Host-ARP",
+		Node: n.UID(),
+		Priority: 0,
+		Match: mt,
+		Actions: acs,
+	}
+	afe := nom.AddFlowEntry{
+		Flow: fe,
+		Subscriber: bh.AppCellKey{
+			App: ctx.App(),
+			Key: k,
+			Dict: nodeDict,
+		},
+	}
+	ctx.Emit(afe)
+
 	return d.Put(k, np)
 }
 

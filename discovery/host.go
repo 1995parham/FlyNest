@@ -66,11 +66,13 @@ type arpPktInHandler struct{}
 func (h *arpPktInHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 	pin := msg.Data().(nom.PacketIn)
 	p := gopacket.NewPacket([]byte(pin.Packet), layers.LayerTypeEthernet, gopacket.Default)
+	fmt.Println(p.Layers())
 	etherlayer := p.Layer(layers.LayerTypeEthernet)
 
 	if etherlayer == nil {
 		return nil
 	}
+
 	e, _ := etherlayer.(*layers.Ethernet)
 
 	if e.EthernetType != layers.EthernetTypeARP {
@@ -84,6 +86,7 @@ func (h *arpPktInHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 		return err
 	}
 	glog.V(2).Infof("Host detected: %v", host)
+	fmt.Printf("Host detected: %v\n", host)
 
 	ctx.Emit(nom.HostConnected(host))
 
