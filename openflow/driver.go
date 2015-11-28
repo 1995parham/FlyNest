@@ -350,6 +350,11 @@ func (d *of10Driver) convAction(a nom.Action) (of10.Action, error) {
 		out.SetPort(uint16(p))
 		return out.Action, nil
 
+	case nom.ActionSendToController:
+		cnt := of10.NewActionOutput()
+		cnt.SetPort(uint16(of10.PP_CONTROLLER))
+		return cnt.Action, nil
+
 	default:
 		return of10.Action{},
 			fmt.Errorf("of10Driver: action not supported %v", action)
@@ -490,9 +495,9 @@ func (d *of12Driver) convAction(a nom.Action) (of12.Action, error) {
 		return out.Action, nil
 
 	case nom.ActionSendToController:
-		out := of12.NewActionOutput()
-		out.SetPort(uint32(of12.PP_CONTROLLER))
-		return out.Action, nil
+		cnt := of12.NewActionOutput()
+		cnt.SetPort(uint32(of12.PP_CONTROLLER))
+		return cnt.Action, nil
 
 	default:
 		return of12.Action{},

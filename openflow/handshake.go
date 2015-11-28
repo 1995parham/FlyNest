@@ -2,6 +2,7 @@ package openflow
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/elahejalalpour/beehive-netctrl/nom"
 	"github.com/elahejalalpour/beehive-netctrl/openflow/of"
@@ -21,8 +22,8 @@ func (c *ofConn) handshake() (ofDriver, error) {
 		return nil, err
 	}
 
-	glog.V(2).Info("%v received hello from a switch with OFv%v", c.ctx,
-		h.Version())
+	glog.Infof("%v received hello from a switch with OFv%v", c.ctx, h.Version())
+	fmt.Printf("%v received hello from a switch with OFv%v\n", c.ctx, h.Version())
 
 	version := of.OPENFLOW_1_0
 	if h.Version() >= uint8(of.OPENFLOW_1_2) {
@@ -36,6 +37,7 @@ func (c *ofConn) handshake() (ofDriver, error) {
 	c.Flush()
 
 	glog.V(2).Info("%v sent hello to the switch", c.ctx)
+	fmt.Printf("%v sent hello to the switch\n", c.ctx)
 
 	var driver ofDriver
 	switch version {
