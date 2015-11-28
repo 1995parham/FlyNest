@@ -70,6 +70,8 @@ func (d *of12Driver) handlePkt(pkt of.Header, c *ofConn) error {
 		return d.handleStatsReply(of12.NewStatsReplyWithBuf(pkt12.Buf), c)
 	case of12.IsRoleReply(pkt12):
 		return d.handleRoleReply(of12.NewRoleReplyWithBuf(pkt12.Buf), c)
+	case of12.IsPortStatus(pkt12):
+		return d.handlePortStatus(of12.NewPortStatusWithBuf(pkt12.Buf), c)
 	default:
 		return fmt.Errorf("received unsupported packet: %v", pkt.Type())
 	}
@@ -154,8 +156,7 @@ func (d *of10Driver) convToOF(msg bh.Msg, c *ofConn) (of.Header, error) {
 			out.SetInPort(ofPort)
 		}
 
-		// FIXME(soheil): when actions are added after data, the packet becomes
-		// corrupted.
+		// FIXME(soheil): when actions are added after data, the packet becomes corrupted.
 		for _, a := range data.Actions {
 			ofa, err := d.convAction(a)
 			if err != nil {

@@ -60,7 +60,7 @@ func (of *of12Driver) handlePacketIn(in of12.PacketIn, c *ofConn) error {
 	}
 
 	// Ignore packet-ins on switch specific ports.
-	if inPort > uint32(of10.PP_MAX) {
+	if inPort > uint32(of12.PP_MAX) {
 		glog.V(2).Infof("ignoring packet-in on %v", inPort)
 		return nil
 	}
