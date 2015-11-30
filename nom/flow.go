@@ -642,7 +642,9 @@ func (a ActionFlood) Equals(thata Action) bool {
 	return a.InPort == thataf.InPort
 }
 
-type ActionSendToController struct{}
+type ActionSendToController struct {
+	MaxLen uint16
+}
 
 func (a ActionSendToController) Equals(thata Action) bool {
 	_, ok := thata.(ActionSendToController)
