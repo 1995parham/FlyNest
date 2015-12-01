@@ -95,19 +95,23 @@ func (h *nodeJoinedHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 	// Add a flow entry to forward arp packets to the controller
 	mt := nom.Match{}
 	mt.AddField(nom.EthType(nom.EthTypeARP))
-	acs := []nom.Action{nom.ActionSendToController{}}
+	acs := []nom.Action{
+		nom.ActionSendToController{
+			MaxLen: 0xffff,
+		},
+	}
 	fe := nom.FlowEntry{
-		ID: "Discovery-Host-ARP",
-		Node: n.UID(),
+		ID:       "Discovery-Host-ARP",
+		Node:     n.UID(),
 		Priority: 0,
-		Match: mt,
-		Actions: acs,
+		Match:    mt,
+		Actions:  acs,
 	}
 	afe := nom.AddFlowEntry{
 		Flow: fe,
 		Subscriber: bh.AppCellKey{
-			App: ctx.App(),
-			Key: k,
+			App:  ctx.App(),
+			Key:  k,
 			Dict: nodeDict,
 		},
 	}

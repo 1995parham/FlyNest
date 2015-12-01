@@ -496,8 +496,10 @@ func (d *of12Driver) convAction(a nom.Action) (of12.Action, error) {
 		return out.Action, nil
 
 	case nom.ActionSendToController:
+		atc := a.(nom.ActionSendToController)
 		cnt := of12.NewActionOutput()
 		cnt.SetPort(uint32(of12.PP_CONTROLLER))
+		cnt.SetMaxLen(atc.MaxLen)
 		return cnt.Action, nil
 
 	default:
