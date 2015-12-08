@@ -1,0 +1,22 @@
+Topology Service
+=================
+Service architecture:
++----------------------------------------------------+
+|                                                    |
+|                   +----------+                     |
+|                   |          |         REST        |
+|     <------------>| Topology |<------------------->|
+|       Beehive Msg |          |                     |
+|                   +----------+                     |
+|                        | Beehive Msg               |
+|                        |                           |
+|====================================================|
+|       +----------------+--------------------+      |
+|       | Host Discovery | NodeLink Discovery |      |
+|       +----------------+--------------------+      |
+|       |      Path      |   Graph Discovery  |      |
+|       +----------------+--------------------+      |
++----------------------------------------------------+
+As you can see this module provide northband API with REST
+and Beehive Msg interface and other services like intent service
+can use it in their work.
