@@ -39,8 +39,7 @@ if __name__ == '__main__':
 
     setLogLevel('info')
 
-    net = Mininet(topo=PathTopo())
-    net.addController(cls=RemoteController, name='beehive-netctrl', ip=args.ip, port=6633)
+    net = Mininet(topo=PathTopo(), controller=RemoteController('beehive-netctrl', ip=args.ip, port=6633))
     net.start()
     CLI(net)
     net.stop()
