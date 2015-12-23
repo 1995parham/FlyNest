@@ -10,8 +10,8 @@ import (
 
 	"github.com/elahejalalpour/beehive-netctrl/controller"
 
-	"../../discovery"
-	"../../openflow"
+	"./discovery"
+	"./openflow"
 
 	bh "github.com/kandoo/beehive"
 )
