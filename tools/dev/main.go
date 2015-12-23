@@ -6,10 +6,14 @@ import (
 	"os"
 	"runtime/pprof"
 
+	"./test"
+
+	"github.com/elahejalalpour/beehive-netctrl/controller"
+
+	"../../discovery"
+	"../../openflow"
+
 	bh "github.com/kandoo/beehive"
-	"github.com/kandoo/beehive-netctrl/controller"
-	"github.com/kandoo/beehive-netctrl/discovery"
-	"github.com/kandoo/beehive-netctrl/openflow"
 )
 
 var cpuprofile = flag.String("cpuprofile", "", "write cpu profile to file")
@@ -34,6 +38,8 @@ func main() {
 	// switching.RegisterSwitch(h, bh.Persistent(1))
 	// or a hub:
 	// switching.RegisterHub(h, bh.NonTransactional())
+
+	test.StartTest(h)
 
 	h.Start()
 }
