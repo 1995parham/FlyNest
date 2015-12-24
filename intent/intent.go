@@ -1,14 +1,15 @@
 package intent
 
 import (
+
 	"github.com/elahejalalpour/beehive-netctrl/http"
 	"github.com/elahejalalpour/beehive-netctrl/nom"
 	bh "github.com/kandoo/beehive"
 	"github.com/elahejalalpour/beehive-netctrl/discovery"
+	"github.com/kandoo/beehive/Godeps/_workspace/src/github.com/golang/glog"
 
 	"encoding/json"
 	"fmt"
-	"github.com/golang/glog"
 )
 
 type intentHandler struct{}
@@ -20,7 +21,9 @@ type shortestPathData struct {
 
 func (h *intentHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 	hrq := msg.Data().(http.HTTPRequest)
+	fmt.Println(hrq.AppName, hrq.Verb)
 	if hrq.AppName == "intent" && hrq.Verb == "build" {
+		fmt.Println(hrq.Data)
 		spd := shortestPathData{}
 		err := json.Unmarshal(hrq.Data, spd)
 		if err != nil {

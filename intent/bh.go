@@ -15,5 +15,5 @@ func RegisterIntent(h bh.Hive) {
 	a.Handle(nom.LinkDeleted{}, &discovery.GraphBuilderCentralized{})
 
 	http.NewHTTPApp(a, h).DefaultHandle()
-//	a.Handle(http.HTTPRequest{}, &intentHandler{})
+	a.Handle(http.HTTPRequest{}, &intentHandler{})
 }
