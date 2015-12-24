@@ -36,6 +36,7 @@ type Host struct {
 	Net      UID
 	MACAddr  MACAddr
 	IPv4Addr IPv4Addr
+	Node     UID
 }
 
 // HostID is the ID of a host. This must be unique among all hosts in

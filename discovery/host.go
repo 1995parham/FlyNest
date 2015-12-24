@@ -79,6 +79,7 @@ func (h *arpPktInHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 	}
 
 	host, _, err := decodeARP([]byte(pin.Packet))
+	host.Node = pin.Node
 
 	if err != nil {
 		glog.Errorf("ARP decoding error: %v", err)
