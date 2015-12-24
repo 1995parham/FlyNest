@@ -380,6 +380,7 @@ const (
 	EthTypeIPv4 EthType = 0x0800
 	EthTypeIPv6         = 0x86DD
 	EthTypeARP          = 0x0806
+	EtherTypeLLDP		= 0x88CC
 )
 
 type Field interface {
