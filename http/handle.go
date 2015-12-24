@@ -26,14 +26,14 @@ func defaultHTTPHandler(w http.ResponseWriter, r *http.Request, h bh.Hive) {
 
 	submodule, ok := vars["submodule"]
 	if !ok {
-		/* This should not happend :) */
+		/* This should not happened :) */
 		http.Error(w, "Invalid request", http.StatusBadRequest)
 		return
 	}
 
 	verb, ok := vars["verb"]
 	if !ok {
-		/* This should not happend :) */
+		/* This should not happened :) */
 		http.Error(w, "Invalid request", http.StatusBadRequest)
 		return
 	}
@@ -43,7 +43,7 @@ func defaultHTTPHandler(w http.ResponseWriter, r *http.Request, h bh.Hive) {
 		Verb:    verb,
 	}
 
-	// Read content data if avaiable :)
+	// Read content data if available :)
 	if r.ContentLength > 0 {
 		data, err := ioutil.ReadAll(r.Body)
 		if err == nil {
