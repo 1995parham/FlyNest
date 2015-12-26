@@ -260,7 +260,7 @@ func (d *of12Driver) convToOF(msg bh.Msg, c *ofConn) (of.Header, error) {
 			ofa, err := d.convAction(a)
 			if err != nil {
 				return of.Header{},
-					fmt.Errorf("of12Driver: invalid action %v", err)
+					fmt.Errorf("of12Driver-PacketOut: invalid action %v", err)
 			}
 			out.AddActions(ofa)
 		}
@@ -291,7 +291,7 @@ func (d *of12Driver) convToOF(msg bh.Msg, c *ofConn) (of.Header, error) {
 			ofa, err := d.convAction(a)
 			if err != nil {
 				return of.Header{},
-					fmt.Errorf("of12Driver: invalid action %v", err)
+					fmt.Errorf("of12Driver-AddFlowEntry: invalid action %v", err)
 			}
 			inst.AddActions(ofa)
 		}
@@ -489,7 +489,7 @@ func (d *of12Driver) convAction(a nom.Action) (of12.Action, error) {
 		p, ok := d.nomPorts[action.Ports[0]]
 		if !ok {
 			return of12.Action{},
-				fmt.Errorf("of12Driver: port %v no found", action.Ports[0])
+				fmt.Errorf("of12Driver-ActionForward: port %v not found", action.Ports[0])
 		}
 		out := of12.NewActionOutput()
 		out.SetPort(uint32(p))
@@ -633,8 +633,7 @@ func (d *of12Driver) nomMatch(m of12.Match) (nom.Match, error) {
 	}
 
 	for _, f := range xm.Fields() {
-		switch f.OxmField() {
-		case uint8(of12.PXMT_IN_PORT):
+		if of12.IsOxmInPort(f) {
 			xf, err := of12.ToOxmInPort(f)
 			if err != nil {
 				return nom.Match{}, err
@@ -642,19 +641,20 @@ func (d *of12Driver) nomMatch(m of12.Match) (nom.Match, error) {
 
 			np, ok := d.ofPorts[xf.InPort()]
 			if !ok {
-				return nom.Match{}, fmt.Errorf("of12Driver: cannot find port %v",
+				return nom.Match{}, fmt.Errorf("of12Driver-Match: cannot find port %v",
 					xf.InPort())
 			}
 			nm.AddField(nom.InPort(np.UID()))
-
-		case uint8(of12.PXMT_ETH_TYPE):
+		}
+		if of12.IsOxmEthType(f) {
 			xf, err := of12.ToOxmEthType(f)
 			if err != nil {
 				return nom.Match{}, err
 			}
 			nm.AddField(nom.EthType(xf.Type()))
+		}
 
-		case uint8(of12.PXMT_ETH_SRC):
+		if of12.IsOxmEthSrc(f) {
 			xf, err := of12.ToOxmEthSrc(f)
 			if err != nil {
 				return nom.Match{}, err
@@ -664,7 +664,9 @@ func (d *of12Driver) nomMatch(m of12.Match) (nom.Match, error) {
 			nf.Addr = xf.MacAddr()
 			nf.Mask = nom.MaskNoneMAC
 			nm.AddField(nf)
+		}
 
+		switch f.OxmField() {
 		case uint8(of12.PXMT_ETH_SRC_MASKED):
 			xf, err := of12.ToOxmEthSrcMasked(f)
 			if err != nil {

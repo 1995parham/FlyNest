@@ -66,7 +66,7 @@ func (d *of12Driver) handleFlowStatsReply(reply of12.FlowStatsReply,
 	for _, stat := range reply.FlowStats() {
 		m, err := d.nomMatch(stat.Match())
 		if err != nil {
-			return err
+			return fmt.Errorf("of12Driver-FlowStatReply: invalid match %v", err)
 		}
 		stat := nom.FlowStats{
 			Match: m,
