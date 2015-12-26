@@ -34,7 +34,7 @@ func (np *nodePortsAndLinks) hasPort(port nom.Port) bool {
 func (np *nodePortsAndLinks) removePort(port nom.Port) bool {
 	for i, p := range np.P {
 		if p.ID == port.ID {
-			np.P = append(np.P[:i], np.P[i+1:]...)
+			np.P = append(np.P[:i], np.P[i + 1:]...)
 			return true
 		}
 	}
@@ -68,7 +68,7 @@ func (np *nodePortsAndLinks) hasLink(link nom.Link) bool {
 func (np *nodePortsAndLinks) removeLink(link nom.Link) bool {
 	for i, l := range np.L {
 		if l.From == link.From {
-			np.L = append(np.L[:i], np.L[i+1:]...)
+			np.L = append(np.L[:i], np.L[i + 1:]...)
 			return true
 		}
 	}
@@ -89,8 +89,6 @@ func (h *nodeJoinedHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 		np = v.(nodePortsAndLinks)
 	}
 	np.N = n
-	// TODO(soheil): Add a flow entry to forward lldp packets to the controller.
-	// TODO(elahe): Add a flow entry to forward arp packets to the controller.
 
 	// Add a flow entry to forward arp packets to the controller
 	mt := nom.Match{}
@@ -108,6 +106,31 @@ func (h *nodeJoinedHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 		Actions:  acs,
 	}
 	afe := nom.AddFlowEntry{
+		Flow: fe,
+		Subscriber: bh.AppCellKey{
+			App:  ctx.App(),
+			Key:  k,
+			Dict: nodeDict,
+		},
+	}
+	ctx.Emit(afe)
+
+	// Add a flow entry to forward lldp packets to the controller
+	mt = nom.Match{}
+	mt.AddField(nom.EthType(nom.EthTypeLLDP))
+	acs = []nom.Action{
+		nom.ActionSendToController{
+			MaxLen: 0xffff,
+		},
+	}
+	fe = nom.FlowEntry{
+		ID:       "Discovery-Topo-LLDP",
+		Node:     n.UID(),
+		Priority: 0,
+		Match:    mt,
+		Actions:  acs,
+	}
+	afe = nom.AddFlowEntry{
 		Flow: fe,
 		Subscriber: bh.AppCellKey{
 			App:  ctx.App(),
@@ -181,9 +204,11 @@ type lldpTimeout struct{}
 type timeoutHandler struct{}
 
 func (h *timeoutHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
+	fmt.Println("LLDP .. ?! Timeout")
 	d := ctx.Dict(nodeDict)
 	d.ForEach(func(k string, v interface{}) bool {
 		np := v.(nodePortsAndLinks)
+		fmt.Println(np)
 		for _, p := range np.P {
 			sendLLDPPacket(np.N, p, ctx)
 		}
@@ -199,6 +224,7 @@ func (h *timeoutHandler) Map(msg bh.Msg, ctx bh.MapContext) bh.MappedCells {
 type lldpPktInHandler struct{}
 
 func (h *lldpPktInHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
+	fmt.Println("LLDP packet is comming :) ready for duty")
 	pin := msg.Data().(nom.PacketIn)
 	p := gopacket.NewPacket([]byte(pin.Packet), layers.LayerTypeEthernet, gopacket.Default)
 	etherlayer := p.Layer(layers.LayerTypeEthernet)

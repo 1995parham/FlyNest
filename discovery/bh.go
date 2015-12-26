@@ -18,7 +18,7 @@ import (
 )
 
 // RegisterDiscovery registers the discovery module for topology discovery on the hive.
-// you can use it's REST API in order to comminucate with it.
+// you can use it's REST API in order to communicate with it.
 func RegisterDiscovery(h bh.Hive) {
 	a := h.NewApp("discovery")
 	a.Handle(nom.NodeJoined{}, &nodeJoinedHandler{})

@@ -53,7 +53,12 @@ func encodeLLDP(n nom.Node, p nom.Port) []byte {
 	ttlTLV.SetType(uint8(lldp.TLV_TTL))
 	ttlTLV.AddValue(0)
 	ttlTLV.AddValue(0xFF)
+	size += ttlTLV.Size()
 
+	tlvb = b[size:]
+	endTLV := lldp.NewLinkDiscoveryTLVWithBuf(tlvb)
+	endTLV.Init()
+	endTLV.SetTypeAndLen(0)
 	size += ttlTLV.Size()
 
 	// TODO(soheil): Maybe add a few custom fields?
