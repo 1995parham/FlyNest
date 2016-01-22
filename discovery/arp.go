@@ -26,7 +26,7 @@ func decodeARP(b []byte) (nom.Host, nom.Port, error) {
 		return nom.Host{}, nom.Port{}, errors.New("decodeARP: no ARP layer in packet")
 	}
 
-	arp, _ := arplayer.(*layers.ARP)
+	arp := arplayer.(*layers.ARP)
 
 	if arp.AddrType != layers.LinkTypeEthernet {
 		return nom.Host{}, nom.Port{}, errors.New("decodeARP: layer 2 protocol is no supported")
