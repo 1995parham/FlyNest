@@ -2,10 +2,10 @@ package intent
 
 import (
 
-	"github.com/elahejalalpour/beehive-netctrl/http"
-	"github.com/elahejalalpour/beehive-netctrl/nom"
+	"github.com/1995parham/flynest/http"
+	"github.com/1995parham/flynest/nom"
 	bh "github.com/kandoo/beehive"
-	"github.com/elahejalalpour/beehive-netctrl/discovery"
+	"github.com/1995parham/flynest/discovery"
 	"github.com/kandoo/beehive/Godeps/_workspace/src/github.com/golang/glog"
 
 	"encoding/json"

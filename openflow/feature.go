@@ -3,8 +3,8 @@ package openflow
 import (
 	"errors"
 
-	"github.com/elahejalalpour/beehive-netctrl/openflow/of10"
-	"github.com/elahejalalpour/beehive-netctrl/openflow/of12"
+	"github.com/1995parham/flynest/openflow/of10"
+	"github.com/1995parham/flynest/openflow/of12"
 )
 
 func (of *of10Driver) handleFeaturesReply(rep of10.FeaturesReply, c *ofConn) error {

@@ -3,7 +3,7 @@ package discovery
 import (
 	"testing"
 
-	"github.com/elahejalalpour/beehive-netctrl/nom"
+	"github.com/1995parham/flynest/nom"
 )
 
 func TestLLDPEncode(t *testing.T) {

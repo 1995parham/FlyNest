@@ -1,6 +1,6 @@
 package controller
 
-import "github.com/elahejalalpour/beehive-netctrl/nom"
+import "github.com/1995parham/flynest/nom"
 
 // Batch represents a collection of flow entries to be added to and removed from
 // the network. The controller ensures that these changes are either all applied

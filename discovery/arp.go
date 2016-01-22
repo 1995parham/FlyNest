@@ -15,7 +15,7 @@ import (
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
 
-	"github.com/elahejalalpour/beehive-netctrl/nom"
+	"github.com/1995parham/flynest/nom"
 )
 
 func decodeARP(b []byte) (nom.Host, nom.Port, error) {

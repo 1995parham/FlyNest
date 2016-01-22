@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/elahejalalpour/beehive-netctrl/nom"
-	"github.com/elahejalalpour/beehive-netctrl/openflow/of10"
-	"github.com/elahejalalpour/beehive-netctrl/openflow/of12"
+	"github.com/1995parham/flynest/nom"
+	"github.com/1995parham/flynest/openflow/of10"
+	"github.com/1995parham/flynest/openflow/of12"
 )
 
 func (d *of10Driver) handleStatsReply(reply of10.StatsReply,

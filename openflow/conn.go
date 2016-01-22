@@ -3,8 +3,8 @@ package openflow
 import (
 	"io"
 
-	"github.com/elahejalalpour/beehive-netctrl/nom"
-	"github.com/elahejalalpour/beehive-netctrl/openflow/of"
+	"github.com/1995parham/flynest/nom"
+	"github.com/1995parham/flynest/openflow/of"
 	bh "github.com/kandoo/beehive"
 	"github.com/kandoo/beehive/Godeps/_workspace/src/github.com/golang/glog"
 )

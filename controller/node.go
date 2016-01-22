@@ -6,7 +6,7 @@ import (
 
 	"github.com/kandoo/beehive/Godeps/_workspace/src/github.com/golang/glog"
 
-	"github.com/elahejalalpour/beehive-netctrl/nom"
+	"github.com/1995parham/flynest/nom"
 	bh "github.com/kandoo/beehive"
 )
 

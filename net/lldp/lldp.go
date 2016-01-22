@@ -12,7 +12,7 @@ import (
 
 	"github.com/packet/packet/src/go/packet"
 
-	"github.com/elahejalalpour/beehive-netctrl/net/ethernet"
+	"github.com/1995parham/flynest/net/ethernet"
 )
 
 type LinkDiscoveryTLVType int

@@ -12,8 +12,8 @@ package discovery
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/elahejalalpour/beehive-netctrl/http"
-	"github.com/elahejalalpour/beehive-netctrl/nom"
+	"github.com/1995parham/flynest/http"
+	"github.com/1995parham/flynest/nom"
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
 	bh "github.com/kandoo/beehive"

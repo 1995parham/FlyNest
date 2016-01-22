@@ -1,10 +1,10 @@
 package intent
 
 import (
-	"github.com/elahejalalpour/beehive-netctrl/http"
-	"github.com/elahejalalpour/beehive-netctrl/nom"
+	"github.com/1995parham/flynest/http"
+	"github.com/1995parham/flynest/nom"
 	bh "github.com/kandoo/beehive"
-	"github.com/kandoo/beehive-netctrl/discovery"
+	"github.com/kandoo/flynest/discovery"
 )
 
 

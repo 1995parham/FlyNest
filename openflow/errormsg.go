@@ -2,8 +2,8 @@ package openflow
 
 import (
 	"github.com/kandoo/beehive/Godeps/_workspace/src/github.com/golang/glog"
-	"github.com/elahejalalpour/beehive-netctrl/openflow/of10"
-	"github.com/elahejalalpour/beehive-netctrl/openflow/of12"
+	"github.com/1995parham/flynest/openflow/of10"
+	"github.com/1995parham/flynest/openflow/of12"
 )
 
 func (of *of10Driver) handleErrorMsg(err of10.ErrorMsg, c *ofConn) error {

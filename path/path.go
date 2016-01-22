@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	bh "github.com/kandoo/beehive"
-	"github.com/elahejalalpour/beehive-netctrl/discovery"
-	"github.com/elahejalalpour/beehive-netctrl/nom"
+	"github.com/1995parham/flynest/discovery"
+	"github.com/1995parham/flynest/nom"
 )
 
 type addHandler struct{}

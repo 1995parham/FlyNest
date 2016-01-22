@@ -2,8 +2,8 @@ package path
 
 import (
 	bh "github.com/kandoo/beehive"
-	"github.com/elahejalalpour/beehive-netctrl/discovery"
-	"github.com/elahejalalpour/beehive-netctrl/nom"
+	"github.com/1995parham/flynest/discovery"
+	"github.com/1995parham/flynest/nom"
 	"github.com/kandoo/beehive/Godeps/_workspace/src/github.com/golang/glog"
 )
 
