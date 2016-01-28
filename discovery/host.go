@@ -104,7 +104,6 @@ func (h *hostConnectedHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 
 	_, err := dict.Get(host.MACAddr.String())
 	if err == nil {
-		glog.Warningf("Host rejoins: %v", host)
 		return nil
 	}
 
@@ -115,8 +114,6 @@ func (h *hostConnectedHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 
 	}
 	hsts = append(hsts, nom.Host(host))
-
-	ctx.Emit(nom.HostJoined(host))
 
 	err = dict.Put(host.MACAddr.String(), host)
 	if err != nil {
@@ -129,6 +126,8 @@ func (h *hostConnectedHandler) Rcv(msg bh.Msg, ctx bh.RcvContext) error {
 		glog.Errorf("Put %v in hsts: %v", hsts, err)
 		return err
 	}
+
+	ctx.Emit(nom.HostJoined(host))
 
 	return nil
 }
