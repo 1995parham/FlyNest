@@ -6,12 +6,11 @@ import (
 	"os"
 	"runtime/pprof"
 
-	"./test"
-
 	"github.com/1995parham/flynest/controller"
 	"github.com/1995parham/flynest/discovery"
 	"github.com/1995parham/flynest/intent"
 	"github.com/1995parham/flynest/openflow"
+	"github.com/1995parham/flynest/test"
 
 	bh "github.com/kandoo/beehive"
 )
