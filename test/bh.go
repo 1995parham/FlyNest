@@ -22,8 +22,8 @@ import (
 )
 
 func hostJoinedRcvf(msg bh.Msg, ctx bh.RcvContext) error {
-	fmt.Println("Rcv of HostJoinedHandler Called")
-	fmt.Println(msg.Data().(nom.HostJoined))
+	ctx.Printf("Rcv of HostJoinedHandler Called")
+	ctx.Printf("%v", msg.Data().(nom.HostJoined))
 	return nil
 }
 
