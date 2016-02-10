@@ -1,17 +1,12 @@
 /*
- * In The Name Of God
- * ========================================
- * [] File Name : bh.go
- *
- * [] Creation Date : 15-11-2015
- *
- * [] Created By : Parham Alvani (parham.alvani@gmail.com)
- * =======================================
+ * +===============================================
+ * | Author:        Parham Alvani (parham.alvani@gmail.com)
+ * |
+ * | Creation Date: 10-02-2016
+ * |
+ * | File Name:     bh.go
+ * +===============================================
  */
-/*
- * Copyright (c) 2015 Parham Alvani.
- */
-
 package test
 
 import (
